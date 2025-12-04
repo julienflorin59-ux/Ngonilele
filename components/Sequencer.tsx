@@ -87,9 +87,9 @@ const Sequencer: React.FC<SequencerProps> = ({ onInsert, tuning }) => {
   ];
 
   return (
-    <div className="flex flex-col gap-4 p-4 h-full bg-[#fdf6e3] rounded-lg shadow-inner overflow-hidden">
+    <div className="flex flex-col gap-4 p-4 h-full bg-[#e5c4a1] rounded-lg shadow-inner overflow-hidden">
         
-        <div className="flex justify-between items-center bg-[#f0e6dc] p-2 rounded">
+        <div className="flex justify-between items-center bg-[#dcc0a3] p-2 rounded">
             <div className="flex gap-2">
                 <button 
                     onClick={() => changeMode('binary')}
@@ -105,21 +105,21 @@ const Sequencer: React.FC<SequencerProps> = ({ onInsert, tuning }) => {
                 </button>
             </div>
             <div className="flex gap-2">
-                <button onClick={clearGrid} className="p-2 text-red-600 hover:bg-[#e5c4a3] rounded" title="Effacer"><Trash2 size={16}/></button>
+                <button onClick={clearGrid} className="p-2 text-red-600 hover:bg-[#cbb094] rounded" title="Effacer"><Trash2 size={16}/></button>
                 <button onClick={generateCode} className="px-4 py-1 bg-green-600 text-white rounded font-bold text-sm flex items-center gap-2 hover:bg-green-700">
                     Insérer <ArrowRight size={14}/>
                 </button>
             </div>
         </div>
 
-        <div className="flex-1 overflow-auto border border-[#A67C52]/20 rounded relative custom-scrollbar bg-[#fdf6e3]">
+        <div className="flex-1 overflow-auto border border-[#A67C52]/20 rounded relative custom-scrollbar bg-[#e5c4a1]">
             <div className="flex flex-col min-w-max">
                 {sortedStrings.map(sid => {
                     const conf = STRING_CONFIGS.find(s => s.stringId === sid);
                     if (!conf) return null;
                     const color = getColor(sid);
                     return (
-                        <div key={sid} className="flex items-center border-b border-[#A67C52]/10 hover:bg-[#f0e6dc] h-8 transition-colors">
+                        <div key={sid} className="flex items-center border-b border-[#A67C52]/10 hover:bg-[#dcc0a3] h-8 transition-colors">
                             {/* Header */}
                             <div 
                                 className="w-12 flex-shrink-0 text-[10px] font-bold text-center border-r border-[#A67C52]/20 h-full flex items-center justify-center text-white"
@@ -136,12 +136,12 @@ const Sequencer: React.FC<SequencerProps> = ({ onInsert, tuning }) => {
                                         onClick={() => toggleStep(sid, step)}
                                         className={`
                                             w-8 h-8 border-r border-[#A67C52]/10 cursor-pointer flex items-center justify-center transition-all
-                                            ${step % 4 === 0 ? 'border-r-[#A67C52]/30 bg-[#f0e6dc]/30' : ''}
+                                            ${step % 4 === 0 ? 'border-r-[#A67C52]/30 bg-[#dcc0a3]/30' : ''}
                                             ${active ? 'opacity-100 scale-90 rounded-sm' : 'opacity-0 hover:opacity-20'}
                                         `}
                                         style={{ backgroundColor: active ? color : 'transparent' }}
                                     >
-                                        <div className={`w-2 h-2 rounded-full ${active ? 'bg-white' : 'bg-gray-400'}`}></div>
+                                        <div className={`w-2 h-2 rounded-full ${active ? 'bg-white' : 'bg-[#a67c52]'}`}></div>
                                     </div>
                                 ))}
                             </div>
@@ -150,7 +150,7 @@ const Sequencer: React.FC<SequencerProps> = ({ onInsert, tuning }) => {
                 })}
                 
                 {/* Footer Markers */}
-                <div className="flex pl-12 h-6 items-center bg-[#f0e6dc] border-t border-[#A67C52]/20">
+                <div className="flex pl-12 h-6 items-center bg-[#dcc0a3] border-t border-[#A67C52]/20">
                     {Array(steps).fill(0).map((_, i) => (
                          <div key={i} className={`w-8 text-[9px] text-center text-[#8d6e63] ${i%4===0?'font-bold text-[#5d4037]':''}`}>
                              {i+1}

@@ -72,9 +72,9 @@ const Visualizer = forwardRef<VisualizerHandle, VisualizerProps>(({ data, curren
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    // Clear with BEIGE background
+    // Clear with New Background Color
     ctx.clearRect(0, 0, MAX_WIDTH, height);
-    ctx.fillStyle = "#fdf6e3"; // BEIGE instead of white
+    ctx.fillStyle = "#e5c4a1"; // Updated Background
     ctx.fillRect(0, 0, MAX_WIDTH, height);
 
     // --- 1. Background Grid ---
@@ -90,7 +90,7 @@ const Visualizer = forwardRef<VisualizerHandle, VisualizerProps>(({ data, curren
         ctx.beginPath();
         // Use the current tuning color for the guide lines too, but faint
         ctx.strokeStyle = getSubColor(s.stringId);
-        ctx.globalAlpha = 0.08;
+        ctx.globalAlpha = 0.15; // Slightly more visible on dark bg
         ctx.lineWidth = 1;
         const x = getX(s.stringId);
         ctx.moveTo(x, 0);
@@ -105,14 +105,14 @@ const Visualizer = forwardRef<VisualizerHandle, VisualizerProps>(({ data, curren
 
         if (note.stringId === 'TEXTE') {
             // Box
-            ctx.fillStyle = "#f0e6dc"; // Darker beige
+            ctx.fillStyle = "#fdf6e3"; // Lighter cream for text box
             ctx.strokeStyle = "#A67C52";
             ctx.beginPath();
             ctx.roundRect(LEFT_OFFSET - 80, y - 12, 160, 20, 4);
             ctx.fill();
             ctx.stroke();
             // Text
-            ctx.fillStyle = "#5d4037";
+            ctx.fillStyle = "#5d4037"; // Brown text
             ctx.font = "bold 11px monospace";
             ctx.textAlign = "center";
             ctx.fillText(note.message || "", LEFT_OFFSET, y + 4);
@@ -120,7 +120,7 @@ const Visualizer = forwardRef<VisualizerHandle, VisualizerProps>(({ data, curren
         }
 
         if (note.stringId === 'PAGE_BREAK') {
-            ctx.strokeStyle = "#A67C52";
+            ctx.strokeStyle = "#5d4037";
             ctx.setLineDash([8, 4]);
             ctx.lineWidth = 2;
             ctx.beginPath();
@@ -129,8 +129,8 @@ const Visualizer = forwardRef<VisualizerHandle, VisualizerProps>(({ data, curren
             ctx.stroke();
             ctx.setLineDash([]);
             
-            ctx.fillStyle = "#A67C52";
-            ctx.font = "10px sans-serif";
+            ctx.fillStyle = "#5d4037"; // Brown text
+            ctx.font = "bold 10px sans-serif";
             ctx.textAlign = "right";
             ctx.fillText("PAGE", MAX_WIDTH - 30, y - 5);
             return;
@@ -142,7 +142,7 @@ const Visualizer = forwardRef<VisualizerHandle, VisualizerProps>(({ data, curren
         // Stem
         ctx.strokeStyle = color;
         ctx.lineWidth = 3;
-        ctx.globalAlpha = 0.4;
+        ctx.globalAlpha = 0.5;
         ctx.beginPath();
         ctx.moveTo(x, y);
         ctx.lineTo(x, y + (note.duration * (TICK_HEIGHT/4)));
@@ -160,7 +160,7 @@ const Visualizer = forwardRef<VisualizerHandle, VisualizerProps>(({ data, curren
 
         // Finger
         if (note.doigt) {
-            ctx.fillStyle = "white";
+            ctx.fillStyle = "white"; // Keep white for readability on colored dot
             ctx.font = "bold 9px Arial";
             ctx.textAlign = "center";
             ctx.fillText(note.doigt, x, y + 3.5);
@@ -181,12 +181,12 @@ const Visualizer = forwardRef<VisualizerHandle, VisualizerProps>(({ data, curren
   }, [data, currentTick, height, tuning]);
 
   return (
-    <div ref={containerRef} className="w-full h-full overflow-y-auto bg-[#fdf6e3] relative custom-scrollbar text-center">
+    <div ref={containerRef} className="w-full h-full overflow-y-auto bg-[#e5c4a1] relative custom-scrollbar text-center">
         <canvas 
             ref={canvasRef} 
             width={MAX_WIDTH} 
             height={height} 
-            className="inline-block bg-[#fdf6e3]"
+            className="inline-block bg-[#e5c4a1]"
         />
     </div>
   );

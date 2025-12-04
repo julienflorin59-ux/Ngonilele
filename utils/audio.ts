@@ -1,5 +1,5 @@
 import { ParsedNote, Tuning } from '../types';
-import { BASE_TUNING } from '../constants';
+import { BASE_TUNING, ASSETS_BASE_URL } from '../constants';
 
 class AudioEngine {
   private ctx: AudioContext | null = null;
@@ -31,30 +31,32 @@ class AudioEngine {
   /**
    * Loads sample files from the server/public folder.
    * Expects files to be named after the note (e.g., "samples/G3.mp3").
+   * Now uses ASSETS_BASE_URL from constants.
    */
   public async loadSamples() {
      if (!this.ctx) return;
      
      const uniqueNotes = Array.from(new Set(Object.values(this.currentTuning)));
-     console.log("Chargement des samples...", uniqueNotes);
+     console.log("Chargement des samples depuis:", ASSETS_BASE_URL);
 
      const loadPromises = uniqueNotes.map(async (note) => {
         if (this.stringBuffers[note]) return;
 
         try {
-            // Attempt to fetch custom sample
-            // PATH CONVENTION: /samples/{NOTE}.mp3  (e.g. /samples/A3.mp3)
-            const response = await fetch(`samples/${note}.mp3`);
+            // Attempt to fetch custom sample from GitHub/External source
+            // PATH CONVENTION: {BASE_URL}/samples/{NOTE}.mp3
+            const url = `${ASSETS_BASE_URL}samples/${note}.mp3`;
+            const response = await fetch(url);
             
             if (!response.ok) {
-                throw new Error(`Fichier introuvable: samples/${note}.mp3`);
+                throw new Error(`Fichier introuvable sur ${url}`);
             }
 
             const arrayBuffer = await response.arrayBuffer();
             const audioBuffer = await this.ctx!.decodeAudioData(arrayBuffer);
             this.stringBuffers[note] = audioBuffer;
         } catch (e) {
-            console.warn(`Sample manquant pour ${note}. Utilisation du synthétiseur de secours.`);
+            console.warn(`Sample manquant pour ${note}. Utilisation du synthétiseur de secours.`, e);
             // Fallback to simple synthesis if user hasn't uploaded samples yet
             if (this.ctx) {
                 this.stringBuffers[note] = this.generateFallbackBuffer(this.ctx, this.getNoteFreq(note));
@@ -105,6 +107,8 @@ class AudioEngine {
   
   public setTuning(tuning: Tuning) {
     this.currentTuning = tuning;
+    // Reload samples only if needed context exists. 
+    // Usually triggered by play() anyway, but good to preload if we can.
     if (this.ctx) {
         this.loadSamples();
     }

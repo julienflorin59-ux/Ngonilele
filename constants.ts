@@ -1,5 +1,13 @@
 import { NoteConfig, SongPreset, ScalePreset, Tuning } from './types';
 
+// =================================================================================
+// 🔗 CONFIGURATION DES RESSOURCES EXTERNES (GITHUB)
+// =================================================================================
+// Remplacez l'URL ci-dessous par le lien "Raw" de la racine de votre dépôt GitHub.
+// Exemple : "https://raw.githubusercontent.com/VOTRE_NOM/VOTRE_PROJET/main/"
+// Assurez-vous de garder le "/" à la fin.
+export const ASSETS_BASE_URL = "https://raw.githubusercontent.com/VOTRE_NOM_UTILISATEUR/NOM_DU_REPO/main/"; 
+
 // Standard Note Colors (User requirement: Fixed color per note)
 export const NOTE_COLORS: Record<string, string> = {
   'C': '#FF0000', // Red

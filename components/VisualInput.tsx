@@ -7,7 +7,7 @@ interface VisualInputProps {
   tuning?: Tuning;
 }
 
-const VisualInput: React.FC<VisualInputProps> = ({ onInsert, tuning }) => {
+export const VisualInput: React.FC<VisualInputProps> = ({ onInsert, tuning }) => {
   
   const handleNoteClick = (stringId: string, hand: string) => {
     // Determine default finger based on hand/string logic
@@ -40,21 +40,21 @@ const VisualInput: React.FC<VisualInputProps> = ({ onInsert, tuning }) => {
   const rightStrings = STRING_CONFIGS.filter(s => s.hand === 'D').sort((a,b) => a.index - b.index); // 1D to 6D
 
   return (
-    <div className="flex flex-col gap-6 p-4 items-center bg-[#fdf6e3] rounded-lg shadow-inner h-full overflow-y-auto">
-      <div className="text-sm text-center text-[#5d4037] mb-2 italic">
+    <div className="flex flex-col gap-6 p-4 items-center bg-[#e5c4a1] rounded-lg h-full overflow-y-auto">
+      <div className="text-sm text-center text-[#5d4037] mb-2 italic font-medium">
         Cliquez sur une corde pour ajouter une note (Noire)
       </div>
 
       <div className="flex gap-8">
         {/* Left Hand Cluster */}
         <div className="flex flex-col gap-2 items-center">
-            <h3 className="font-bold text-[#5d4037] mb-2 border-b border-[#A67C52]">MAIN GAUCHE</h3>
+            <h3 className="font-bold text-[#5d4037] mb-2 border-b border-[#5d4037]">MAIN GAUCHE</h3>
             <div className="flex gap-2">
                 {leftStrings.map(s => (
                     <button
                         key={s.stringId}
                         onClick={() => handleNoteClick(s.stringId, 'G')}
-                        className="w-10 h-64 rounded-full relative flex flex-col items-center justify-end pb-4 hover:opacity-80 transition-transform active:scale-95 shadow-md border border-gray-300"
+                        className="w-10 h-64 rounded-full relative flex flex-col items-center justify-end pb-4 hover:opacity-80 transition-transform active:scale-95 shadow-md border border-[#cbb094]"
                         style={{ backgroundColor: getColor(s.stringId) }}
                         title={`Corde ${s.stringId} (${getNoteName(s.stringId)})`}
                     >
@@ -70,13 +70,13 @@ const VisualInput: React.FC<VisualInputProps> = ({ onInsert, tuning }) => {
 
         {/* Right Hand Cluster */}
         <div className="flex flex-col gap-2 items-center">
-            <h3 className="font-bold text-[#5d4037] mb-2 border-b border-[#A67C52]">MAIN DROITE</h3>
+            <h3 className="font-bold text-[#5d4037] mb-2 border-b border-[#5d4037]">MAIN DROITE</h3>
             <div className="flex gap-2">
                 {rightStrings.map(s => (
                     <button
                         key={s.stringId}
                         onClick={() => handleNoteClick(s.stringId, 'D')}
-                        className="w-10 h-64 rounded-full relative flex flex-col items-center justify-end pb-4 hover:opacity-80 transition-transform active:scale-95 shadow-md border border-gray-300"
+                        className="w-10 h-64 rounded-full relative flex flex-col items-center justify-end pb-4 hover:opacity-80 transition-transform active:scale-95 shadow-md border border-[#cbb094]"
                         style={{ backgroundColor: getColor(s.stringId) }}
                         title={`Corde ${s.stringId} (${getNoteName(s.stringId)})`}
                     >
@@ -86,17 +86,14 @@ const VisualInput: React.FC<VisualInputProps> = ({ onInsert, tuning }) => {
                 ))}
             </div>
         </div>
-      </div>
 
       {/* Rhythm Quick Insert */}
       <div className="grid grid-cols-4 gap-2 mt-4 w-full max-w-md">
-          <button onClick={() => onInsert('+ S')} className="p-2 bg-[#f0e6dc] hover:bg-[#e5c4a3] rounded text-sm font-bold border border-[#cbb094] text-[#5d4037]">Silence (+)</button>
-          <button onClick={() => onInsert('TXT Nouvelle Partie')} className="p-2 bg-[#f0e6dc] hover:bg-[#e5c4a3] rounded text-sm font-bold border border-[#cbb094] text-[#5d4037]">Texte</button>
-          <button onClick={() => onInsert('PAGE')} className="p-2 bg-[#f0e6dc] hover:bg-[#e5c4a3] rounded text-sm font-bold border border-[#cbb094] text-[#5d4037]">Saut Page</button>
-          <button onClick={() => onInsert('REPETER x2')} className="p-2 bg-[#f0e6dc] hover:bg-[#e5c4a3] rounded text-sm font-bold border border-[#cbb094] text-[#5d4037]">Répétition</button>
+          <button onClick={() => onInsert('+ S')} className="p-2 bg-[#fdf6e3] hover:bg-[#dcc0a3] rounded text-sm font-bold border border-[#cbb094] text-[#5d4037]">Silence (+)</button>
+          <button onClick={() => onInsert('TXT Nouvelle Partie')} className="p-2 bg-[#fdf6e3] hover:bg-[#dcc0a3] rounded text-sm font-bold border border-[#cbb094] text-[#5d4037]">Texte</button>
+          <button onClick={() => onInsert('PAGE')} className="p-2 bg-[#fdf6e3] hover:bg-[#dcc0a3] rounded text-sm font-bold border border-[#cbb094] text-[#5d4037]">Saut Page</button>
+          <button onClick={() => onInsert('REPETER x2')} className="p-2 bg-[#fdf6e3] hover:bg-[#dcc0a3] rounded text-sm font-bold border border-[#cbb094] text-[#5d4037]">Répétition</button>
       </div>
     </div>
   );
 };
-
-export default VisualInput;
